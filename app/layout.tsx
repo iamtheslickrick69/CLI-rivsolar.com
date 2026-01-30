@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Barlow, Barlow_Condensed } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { RivAIChatbot } from '@/components/riv-ai-chatbot'
+import { LaunchCountdown } from '@/components/launch-countdown'
 import './globals.css'
 
 const barlow = Barlow({
@@ -43,6 +44,7 @@ export default function RootLayout({
       <body className={`${barlow.variable} ${barlowCondensed.variable} font-sans antialiased bg-black text-white`}>
         {children}
         <RivAIChatbot />
+        <LaunchCountdown />
         <Analytics />
       </body>
     </html>
