@@ -310,7 +310,7 @@ export function TimelineSection() {
           </motion.div>
 
           {/* Expanded Details Card - Fixed height locked to 2026 tab size (largest) */}
-          <div className="h-[420px] sm:h-[340px]">
+          <div className="h-[380px] sm:h-[340px]">
             <AnimatePresence mode="wait">
               {selectedData && (
                 <motion.div
@@ -380,14 +380,14 @@ export function TimelineSection() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.15, duration: 0.2 }}
-                    className="mt-6 pt-6 border-t border-[#333]"
+                    className="mt-4 pt-4 border-t border-[#333]"
                   >
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                      <div className="flex items-center gap-2 text-[#a3a3a3]">
-                        <TrendingUp className="w-5 h-5" />
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                      <div className="flex items-center gap-2 text-[#a3a3a3] text-sm">
+                        <TrendingUp className="w-4 h-4" />
                         <span className="font-medium">Rates have more than doubled since 2014</span>
                       </div>
-                      <button className="px-6 py-3 bg-white hover:bg-[#e5e5e5] text-black font-semibold rounded-lg transition-colors flex items-center gap-2 uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]">
+                      <button className="px-4 py-2 sm:px-6 sm:py-3 bg-white hover:bg-[#e5e5e5] text-black text-sm font-semibold rounded-lg transition-colors flex items-center gap-2 uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]">
                         LOCK IN TODAY'S RATES
                         <ChevronRight className="w-4 h-4" />
                       </button>
