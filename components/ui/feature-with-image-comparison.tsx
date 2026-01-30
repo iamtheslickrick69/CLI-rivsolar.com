@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { GripVertical, X, Sun, Zap, DollarSign, Home, Shield, Leaf, TrendingUp, Battery, CloudOff, Flame } from "lucide-react"
+import { useState, useRef } from "react"
+import { GripVertical, X, Sun } from "lucide-react"
 
 interface ComparisonItem {
   icon: React.ReactNode
@@ -12,16 +12,19 @@ interface ComparisonItem {
 interface SolarComparisonProps {
   withoutSolar: ComparisonItem[]
   withSolar: ComparisonItem[]
+  withoutChartSrc?: string
+  withChartSrc?: string
 }
 
-function SolarComparison({ withoutSolar, withSolar }: SolarComparisonProps) {
+function SolarComparison({ withoutSolar, withSolar, withoutChartSrc, withChartSrc }: SolarComparisonProps) {
   const [inset, setInset] = useState<number>(50)
-  const [onMouseDown, setOnMouseDown] = useState<boolean>(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
+  // Auto-slide on cursor movement (no drag required)
   const onMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!onMouseDown) return
+    if (!containerRef.current) return
 
-    const rect = e.currentTarget.getBoundingClientRect()
+    const rect = containerRef.current.getBoundingClientRect()
     let x = 0
 
     if ("touches" in e && e.touches.length > 0) {
@@ -30,44 +33,56 @@ function SolarComparison({ withoutSolar, withSolar }: SolarComparisonProps) {
       x = e.clientX - rect.left
     }
 
-    const percentage = Math.max(5, Math.min(95, (x / rect.width) * 100))
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100))
     setInset(percentage)
   }
 
   return (
     <div
-      className="relative w-full min-h-[600px] md:min-h-[700px] overflow-hidden rounded-[24px] md:rounded-[32px] select-none border border-zinc-800"
+      ref={containerRef}
+      className="relative w-full min-h-[720px] md:min-h-[760px] overflow-hidden rounded-[24px] md:rounded-[32px] select-none border border-[#333] cursor-ew-resize"
       onMouseMove={onMouseMove}
-      onMouseUp={() => setOnMouseDown(false)}
-      onMouseLeave={() => setOnMouseDown(false)}
       onTouchMove={onMouseMove}
-      onTouchEnd={() => setOnMouseDown(false)}
     >
-      {/* WITHOUT SOLAR - Left Side (Background) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-red-950/30 to-zinc-900">
-        <div className="absolute inset-0 p-6 md:p-10">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-              <X className="w-5 h-5 text-red-400" />
+      {/* WITHOUT SOLAR - Left Side (Background) - Orange theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-orange-950/20 to-[#111]">
+        <div className="absolute inset-0 p-5 md:p-8">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
+              <X className="w-5 h-5 text-orange-400" />
             </div>
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-white">Without Solar</h3>
-              <p className="text-red-400/80 text-sm">The painful reality</p>
+              <h3 className="text-xl md:text-2xl font-bold text-white uppercase font-[family-name:var(--font-barlow-condensed)]">Without Solar</h3>
+              <p className="text-orange-400/80 text-sm">Buying from the grid</p>
             </div>
           </div>
-          <div className="space-y-3 md:space-y-4 mt-8">
+
+          {/* Chart Image */}
+          {withoutChartSrc && (
+            <div className="mb-4 rounded-xl overflow-hidden border border-orange-500/20 bg-white">
+              <img
+                src={withoutChartSrc}
+                alt="Energy purchased from grid"
+                className="w-full h-[140px] md:h-[160px] object-contain"
+              />
+            </div>
+          )}
+
+          {/* Comparison Items */}
+          <div className="space-y-2">
             {withoutSolar.map((item, index) => (
               <div
                 key={index}
-                className="flex items-start gap-3 p-3 md:p-4 bg-red-500/5 border border-red-500/20 rounded-[12px]"
+                className="flex items-center gap-3 p-3 bg-orange-500/5 border border-orange-500/20 rounded-xl"
               >
-                <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0">
                   {item.icon}
                 </div>
-                <div>
-                  <p className="text-white font-semibold text-sm md:text-base">{item.text}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-semibold text-sm">{item.text}</p>
                   {item.detail && (
-                    <p className="text-red-300/60 text-xs md:text-sm mt-0.5">{item.detail}</p>
+                    <p className="text-orange-300/60 text-xs truncate">{item.detail}</p>
                   )}
                 </div>
               </div>
@@ -76,36 +91,50 @@ function SolarComparison({ withoutSolar, withSolar }: SolarComparisonProps) {
         </div>
       </div>
 
-      {/* WITH SOLAR - Right Side (Overlay with clip) */}
+      {/* WITH SOLAR - Right Side (Overlay with clip) - Purple theme */}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-purple-950/40 to-zinc-900"
+        className="absolute inset-0 bg-[#111]"
         style={{
           clipPath: `inset(0 0 0 ${inset}%)`,
         }}
       >
-        <div className="absolute inset-0 p-6 md:p-10">
-          <div className="flex items-center gap-2 mb-6 justify-end">
-            <div>
-              <h3 className="text-xl md:text-2xl font-bold text-white text-right">With Solar</h3>
-              <p className="text-purple-400/80 text-sm text-right">Your brighter future</p>
+        <div className="absolute inset-0 p-5 md:p-8">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-4 justify-end">
+            <div className="text-right">
+              <h3 className="text-xl md:text-2xl font-bold text-white uppercase font-[family-name:var(--font-barlow-condensed)]">With Solar</h3>
+              <p className="text-purple-400/80 text-sm">Sending back to the grid</p>
             </div>
             <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
               <Sun className="w-5 h-5 text-purple-400" />
             </div>
           </div>
-          <div className="space-y-3 md:space-y-4 mt-8">
+
+          {/* Chart Image */}
+          {withChartSrc && (
+            <div className="mb-4 rounded-xl overflow-hidden border border-purple-500/20 bg-white">
+              <img
+                src={withChartSrc}
+                alt="Energy sent back to grid"
+                className="w-full h-[140px] md:h-[160px] object-contain"
+              />
+            </div>
+          )}
+
+          {/* Comparison Items */}
+          <div className="space-y-2">
             {withSolar.map((item, index) => (
               <div
                 key={index}
-                className="flex items-start gap-3 p-3 md:p-4 bg-purple-500/10 border border-purple-500/30 rounded-[12px] flex-row-reverse text-right"
+                className="flex items-center gap-3 p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl flex-row-reverse text-right"
               >
-                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
                   {item.icon}
                 </div>
-                <div>
-                  <p className="text-white font-semibold text-sm md:text-base">{item.text}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-semibold text-sm">{item.text}</p>
                   {item.detail && (
-                    <p className="text-green-300/60 text-xs md:text-sm mt-0.5">{item.detail}</p>
+                    <p className="text-purple-300/60 text-xs truncate">{item.detail}</p>
                   )}
                 </div>
               </div>
@@ -116,43 +145,33 @@ function SolarComparison({ withoutSolar, withSolar }: SolarComparisonProps) {
 
       {/* Slider Handle */}
       <div
-        className="absolute z-30 top-0 h-full w-1 bg-white/50"
+        className="absolute z-30 top-0 h-full w-1 bg-white/60 pointer-events-none"
         style={{
           left: `${inset}%`,
           transform: "translateX(-50%)",
         }}
       >
-        <button
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-2xl cursor-ew-resize flex items-center justify-center hover:scale-110 transition-transform border-4 border-purple-500"
-          onTouchStart={(e) => {
-            setOnMouseDown(true)
-            onMouseMove(e)
-          }}
-          onMouseDown={(e) => {
-            setOnMouseDown(true)
-            onMouseMove(e)
-          }}
-          onTouchEnd={() => setOnMouseDown(false)}
-          onMouseUp={() => setOnMouseDown(false)}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-2xl flex items-center justify-center border-2 border-[#333]"
         >
-          <GripVertical className="h-5 w-5 text-purple-600" />
-        </button>
+          <GripVertical className="h-4 w-4 text-[#333]" />
+        </div>
 
         {/* Labels */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2">
-          <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full whitespace-nowrap -translate-x-full -ml-2">
+          <span className="bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap -translate-x-full -ml-1 uppercase tracking-wide">
             WITHOUT
           </span>
-          <span className="bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full whitespace-nowrap translate-x-0 ml-2">
+          <span className="bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap translate-x-0 ml-1 uppercase tracking-wide">
             WITH
           </span>
         </div>
       </div>
 
-      {/* Drag instruction */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40">
-        <div className="bg-white/10 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full border border-white/20">
-          ← Drag to compare →
+      {/* Hover instruction */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 pointer-events-none">
+        <div className="bg-black/60 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-full border border-[#333] uppercase tracking-wide">
+          ← Move cursor to compare →
         </div>
       </div>
     </div>

@@ -151,7 +151,7 @@ export default function NeuralBackground({
       // This creates the "Trails" look.
       // We use the background color of the parent or a dark overlay.
       // Assuming dark mode for this effect usually:
-      ctx.fillStyle = `rgba(9, 9, 11, ${trailOpacity})`; // #09090B
+      ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`; // Pure black to match bg-black
       ctx.fillRect(0, 0, width, height);
 
       particles.forEach((p) => {

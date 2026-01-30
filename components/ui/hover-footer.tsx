@@ -52,11 +52,11 @@ export const TextHoverEffect = ({
         >
           {hovered && (
             <>
-              <stop offset="0%" stopColor="#a855f7" />
-              <stop offset="25%" stopColor="#9333ea" />
-              <stop offset="50%" stopColor="#7c3aed" />
-              <stop offset="75%" stopColor="#8b5cf6" />
-              <stop offset="100%" stopColor="#c084fc" />
+              <stop offset="0%" stopColor="#eab308" />
+              <stop offset="25%" stopColor="#ef4444" />
+              <stop offset="50%" stopColor="#80eeb4" />
+              <stop offset="75%" stopColor="#06b6d4" />
+              <stop offset="100%" stopColor="#8b5cf6" />
             </>
           )}
         </linearGradient>
@@ -82,25 +82,26 @@ export const TextHoverEffect = ({
           />
         </mask>
       </defs>
+      {/* Ghost text that appears on hover */}
       <text
         x="50%"
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[helvetica] text-7xl font-bold dark:stroke-neutral-800"
+        className="fill-transparent stroke-neutral-700 font-[helvetica] text-7xl font-bold"
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         {text}
       </text>
+      {/* Animated outline text */}
       <motion.text
         x="50%"
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-[#9333ea] font-[helvetica] text-7xl font-bold
-        dark:stroke-[#9333ea99]"
+        className="fill-transparent stroke-[#3ca2fa] font-[helvetica] text-7xl font-bold"
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,
@@ -113,6 +114,7 @@ export const TextHoverEffect = ({
       >
         {text}
       </motion.text>
+      {/* Rainbow gradient text revealed on hover */}
       <text
         x="50%"
         y="50%"
@@ -129,14 +131,13 @@ export const TextHoverEffect = ({
   );
 };
 
-
 export const FooterBackgroundGradient = () => {
   return (
     <div
       className="absolute inset-0 z-0"
       style={{
         background:
-          "radial-gradient(125% 125% at 50% 10%, #0F0F1166 50%, #9333ea33 100%)",
+          "radial-gradient(125% 125% at 50% 10%, #0F0F1166 50%, #3ca2fa33 100%)",
       }}
     />
   );

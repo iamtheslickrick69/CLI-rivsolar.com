@@ -22,25 +22,25 @@ interface Accordion03Props {
 
 function Accordion03({ items, className }: Accordion03Props) {
   return (
-    <div className={`border border-zinc-800 rounded-[16px] overflow-hidden ${className || ""}`}>
+    <div className={`border border-gray-200 rounded-[16px] overflow-hidden shadow-sm ${className || ""}`}>
       <Accordion type="single" collapsible className="w-full" defaultValue={items[0]?.id}>
         {items.map((item, index) => (
           <AccordionItem
             value={item.id}
             key={item.id}
-            className={`border-zinc-800 px-8 ${index === items.length - 1 ? "border-b-0" : ""}`}
+            className={`border-gray-200 px-8 ${index === items.length - 1 ? "border-b-0" : ""}`}
           >
-            <AccordionTrigger className="text-left text-white hover:no-underline py-6 text-xl md:text-2xl font-semibold [&[data-state=open]]:text-white [&>svg]:hidden">
+            <AccordionTrigger className="text-left text-black hover:no-underline py-6 text-xl md:text-2xl font-semibold [&[data-state=open]]:text-black [&>svg]:hidden">
               {item.title}
             </AccordionTrigger>
-            <AccordionContent className="text-zinc-400 pb-8">
+            <AccordionContent className="text-gray-600 pb-8">
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 {/* Left side - Text content */}
                 <div className="md:w-2/5 flex flex-col">
                   <p className="text-base md:text-lg leading-relaxed mb-6">{item.content}</p>
                   <Button
                     variant="outline"
-                    className="w-fit bg-zinc-100 hover:bg-white text-zinc-900 border-0 rounded-[8px] px-6 py-2 font-medium"
+                    className="w-fit bg-black hover:bg-gray-800 text-white border-0 rounded-[8px] px-6 py-2 font-medium"
                   >
                     View More
                   </Button>

@@ -41,20 +41,20 @@ const blogItems = [
 
 export function BlogSection() {
   return (
-    <section className="py-24 px-6" style={{ backgroundColor: "#09090B" }}>
+    <section className="py-24 px-6 bg-black">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-400 text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-2 bg-[#1a1a1a] border border-[#333] rounded-full text-[#a3a3a3] text-sm font-medium mb-6 uppercase tracking-wide">
             Solar Insights
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 uppercase font-[family-name:var(--font-barlow-condensed)]">
             Learn Before You{" "}
-            <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-[#a3a3a3]">
               Leap
             </span>
           </h2>
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+          <p className="text-[#a3a3a3] text-lg max-w-2xl mx-auto">
             Knowledge is power. Get the latest insights on California solar policy, savings strategies, and industry trends.
           </p>
         </div>
@@ -79,18 +79,18 @@ export function BlogSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                   {/* Content overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                    <span className="inline-block px-3 py-1 bg-purple-600 text-white text-xs font-medium rounded-full mb-4">
+                    <span className="inline-block px-3 py-1 bg-white text-black text-xs font-medium rounded-full mb-4">
                       {item.category}
                     </span>
-                    <h3 className="text-2xl md:text-4xl font-bold text-white mb-3">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white mb-3 uppercase font-[family-name:var(--font-barlow-condensed)]">
                       {item.title}
                     </h3>
-                    <p className="text-zinc-300 text-base md:text-lg max-w-2xl mb-4">
+                    <p className="text-[#a3a3a3] text-base md:text-lg max-w-2xl mb-4">
                       {item.desc}
                     </p>
                     <a
                       href="#"
-                      className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                      className="inline-flex items-center gap-2 text-white hover:text-[#a3a3a3] font-medium transition-colors"
                     >
                       Read Article
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,21 +103,21 @@ export function BlogSection() {
             ))}
           </SliderContent>
 
-          <SliderBtnGroup className="absolute bottom-0 left-0 right-0 h-fit bg-zinc-900/80 backdrop-blur-md overflow-hidden grid grid-cols-2 md:grid-cols-4 rounded-b-[20px] border-t border-zinc-800">
+          <SliderBtnGroup className="absolute bottom-0 left-0 right-0 h-fit bg-[#111]/90 backdrop-blur-md overflow-hidden grid grid-cols-2 md:grid-cols-4 rounded-b-[20px] border-t border-[#333]">
             {blogItems.map((item, index) => (
               <SliderBtn
                 key={index}
                 value={item.sliderName}
-                className="text-left cursor-pointer p-4 md:p-5 border-r border-zinc-800 last:border-r-0 hover:bg-zinc-800/50 transition-colors"
-                progressBarClass="bg-purple-600/30 h-full"
+                className="text-left cursor-pointer p-4 md:p-5 border-r border-[#333] last:border-r-0 hover:bg-[#1a1a1a] transition-colors"
+                progressBarClass="bg-white/10 h-full"
               >
-                <span className="inline-block px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-medium rounded mb-2">
+                <span className="inline-block px-2 py-0.5 bg-[#1a1a1a] border border-[#333] text-[#a3a3a3] text-xs font-medium rounded mb-2">
                   {item.category}
                 </span>
                 <h4 className="text-white font-semibold text-sm md:text-base mb-1">
                   {item.title}
                 </h4>
-                <p className="text-zinc-500 text-xs md:text-sm line-clamp-2 hidden md:block">
+                <p className="text-[#6b6b6b] text-xs md:text-sm line-clamp-2 hidden md:block">
                   {item.desc}
                 </p>
               </SliderBtn>
@@ -129,9 +129,9 @@ export function BlogSection() {
         <div className="mt-12 text-center">
           <a
             href="#"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-[12px] transition-colors border border-zinc-700"
+            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white hover:bg-white/10 font-semibold rounded-lg transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
           >
-            View All Articles
+            VIEW ALL ARTICLES
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

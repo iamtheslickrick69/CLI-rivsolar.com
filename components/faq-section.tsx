@@ -43,24 +43,24 @@ const faqItems = [
 
 export function FAQSection() {
   return (
-    <section className="py-24 px-6" style={{ backgroundColor: "#09090B" }}>
+    <section className="py-24 px-6 bg-white">
       <div className="max-w-5xl mx-auto">
         {/* Accordion */}
         <Accordion03 items={faqItems} />
 
         {/* Bottom CTA */}
         <div className="mt-16 text-center">
-          <p className="text-zinc-500 mb-4">Still have questions?</p>
+          <p className="text-gray-600 mb-4">Still have questions?</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-[12px] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-black hover:bg-gray-800 text-white font-semibold rounded-lg transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
             >
-              Chat with RIV
+              CHAT WITH RIV
             </a>
             <a
               href="#"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-[12px] transition-colors border border-zinc-700"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-black text-black hover:bg-black/5 font-semibold rounded-lg transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
             >
               Schedule a Call
             </a>

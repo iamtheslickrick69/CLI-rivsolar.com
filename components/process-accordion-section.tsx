@@ -7,61 +7,66 @@ const processItems = [
   {
     id: 1,
     title: "Free Consultation",
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+    imageUrl: "/process/comparison.jpg",
+    description: "One of our licensed experts will give you a completely free and accurate side-by-side comparison showing you all of your energy options. Solar is not for everyone — we let the numbers speak for themselves.",
   },
   {
     id: 2,
     title: "Custom Design",
-    imageUrl: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
+    imageUrl: "/process/blueprint.jpg",
+    description: "Our engineers design a system tailored to your home, roof layout, and energy usage. Every panel placement is optimized for maximum savings.",
   },
   {
     id: 3,
     title: "Professional Install",
-    imageUrl: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80",
+    imageUrl: "/process/professionalinstall.jpg",
+    description: "Our in-house certified installers handle everything — no subcontractors. Most installations are completed in just 1-2 days.",
   },
   {
     id: 4,
     title: "System Activation",
-    imageUrl: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?w=800&q=80",
+    imageUrl: "/process/activation.jpg",
+    description: "We handle all permits, inspections, and utility paperwork. Once approved, we flip the switch and your system goes live.",
   },
   {
     id: 5,
     title: "Start Saving",
     imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    description: "Watch your savings grow in real-time. Most homeowners see their first reduced bill within 30 days of activation.",
   },
 ]
 
 export function ProcessAccordionSection() {
   return (
-    <section className="py-24 px-6" style={{ backgroundColor: "#09090B" }}>
+    <section className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
 
           {/* Left Side: Text Content */}
           <div className="w-full lg:w-2/5 text-center lg:text-left">
-            <span className="inline-block px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-400 text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-2 bg-gray-100 border border-gray-200 rounded-full text-gray-600 text-sm font-medium mb-6 uppercase tracking-wide">
               Simple 5-Step Process
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight mb-6 uppercase font-[family-name:var(--font-barlow-condensed)]">
               Your Path to{" "}
-              <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
-                Solar Freedom
+              <span className="text-gray-500">
+                Energy Freedom
               </span>
             </h2>
-            <p className="text-lg text-zinc-400 max-w-xl mx-auto lg:mx-0 mb-8">
+            <p className="text-lg text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8">
               From free consultation to flipping the switch — we handle everything. Most homeowners go solar in just 4-8 weeks.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a
                 href="#"
-                className="inline-flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold px-8 py-4 rounded-[14px] shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all"
+                className="inline-flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg transition-all uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
               >
                 <Sparkles className="w-5 h-5" />
-                Start Your Journey
+                START YOUR JOURNEY
               </a>
               <a
                 href="#"
-                className="inline-flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold px-8 py-4 rounded-[14px] border border-zinc-700 transition-colors"
+                className="inline-flex items-center justify-center gap-2 border-2 border-black text-black hover:bg-black/5 font-semibold px-8 py-4 rounded-lg transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
               >
                 Learn More
               </a>
