@@ -35,7 +35,7 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/adobestock.webp"
+          href="/images/r2/adobestock.webp"
           as="image"
           type="image/webp"
         />

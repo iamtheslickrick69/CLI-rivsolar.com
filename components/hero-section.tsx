@@ -10,7 +10,7 @@ export function HeroSection() {
       {/* Background Image - NO TINT - Full brightness */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/adobestock.webp"
+          src="/images/r2/adobestock.webp"
           alt="Solar panels on California home"
           fill
           className="object-cover"

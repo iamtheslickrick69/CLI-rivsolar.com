@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Zap, ChevronRight, TrendingUp, AlertTriangle, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -93,13 +93,6 @@ const timelineData: TimelineYear[] = [
 
 export function TimelineSection() {
   const [selectedYear, setSelectedYear] = useState<string>("2026")
-  const [activeVideo, setActiveVideo] = useState<1 | 2 | 3>(1)
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-  const video1Ref = useRef<HTMLVideoElement>(null)
-  const video2Ref = useRef<HTMLVideoElement>(null)
-  const video3Ref = useRef<HTMLVideoElement>(null)
-  const video2CutoffTriggered = useRef(false)
 
   const selectedData = timelineData.find((d) => d.year === selectedYear)
 
@@ -107,129 +100,17 @@ export function TimelineSection() {
   const selectedIndex = timelineData.findIndex(d => d.year === selectedYear)
   const sliderPosition = (selectedIndex / (timelineData.length - 1)) * 100
 
-  // Intersection Observer - only load/play videos when section is visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true)
-          // Start playing video 1 when section becomes visible
-          if (video1Ref.current) {
-            video1Ref.current.play()
-          }
-        }
-      },
-      { threshold: 0.1, rootMargin: '100px' }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [isVisible])
-
-  // Handle video 1 ending - transition to video 2
-  const handleVideo1End = () => {
-    video2CutoffTriggered.current = false // Reset cutoff flag
-    if (video2Ref.current) {
-      video2Ref.current.currentTime = 0
-      video2Ref.current.play()
-    }
-    setActiveVideo(2)
-  }
-
-  // Handle video 2 time update - cut at 14 seconds
-  const handleVideo2TimeUpdate = () => {
-    if (video2Ref.current && video2Ref.current.currentTime >= 14 && !video2CutoffTriggered.current) {
-      video2CutoffTriggered.current = true
-      if (video3Ref.current) {
-        video3Ref.current.currentTime = 0
-        video3Ref.current.play()
-      }
-      setActiveVideo(3)
-    }
-  }
-
-  // Handle video 3 ending - loop back to video 1
-  const handleVideo3End = () => {
-    if (video1Ref.current) {
-      video1Ref.current.currentTime = 0
-      video1Ref.current.play()
-    }
-    setActiveVideo(1)
-  }
-
-  // Lazy load videos only when section is visible
-  useEffect(() => {
-    if (!isVisible) return
-    // Load video 2 after a delay to not block initial render
-    const timer = setTimeout(() => {
-      if (video2Ref.current) video2Ref.current.load()
-    }, 3000)
-    return () => clearTimeout(timer)
-  }, [isVisible])
-
   return (
-    <section ref={sectionRef} className="relative z-20 overflow-hidden">
-      {/* Video Background - Optimized for fast loading */}
+    <section className="relative z-20 overflow-hidden">
+      {/* Background - Static image only for reliability */}
       <div className="absolute inset-0 z-0">
-        {/* Static image fallback - loads instantly */}
         <img
-          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.webp"
+          src="/images/r2/house3.webp"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
         />
-
-        {/* Video 1 - solarvid.mp4 */}
-        <video
-          ref={video1Ref}
-          muted
-          playsInline
-          preload="none"
-          poster="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.webp"
-          onEnded={handleVideo1End}
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms]",
-            activeVideo === 1 ? "opacity-100" : "opacity-0"
-          )}
-        >
-          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aasolarvid.mp4#t=0.001" type="video/mp4" />
-        </video>
-
-        {/* Video 2 - vidhome5.mp4 (plays for 14 seconds) */}
-        <video
-          ref={video2Ref}
-          muted
-          playsInline
-          preload="none"
-          onTimeUpdate={handleVideo2TimeUpdate}
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms]",
-            activeVideo === 2 ? "opacity-100" : "opacity-0"
-          )}
-        >
-          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aavidhome5.mp4#t=0.001" type="video/mp4" />
-        </video>
-
-        {/* Video 3 - solarrooftops.mp4 (plays to end, then loops back to video 1) */}
-        <video
-          ref={video3Ref}
-          muted
-          playsInline
-          preload="none"
-          onEnded={handleVideo3End}
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms]",
-            activeVideo === 3 ? "opacity-100" : "opacity-0"
-          )}
-        >
-          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aasolarrooftops.mp4#t=0.001" type="video/mp4" />
-        </video>
-
-        {/* Light overlay for text readability - BRIGHTER */}
-        <div className="absolute inset-0 bg-black/25" />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
       <div className="relative z-10 py-20 px-6">

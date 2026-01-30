@@ -6,9 +6,9 @@ import { Star, Shield, Quote } from "lucide-react"
 
 // Background images that rotate
 const backgroundImages = [
-  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.webp",
-  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house1.webp",
-  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house4.webp",
+  "/images/r2/house3.webp",
+  "/images/r2/house1.webp",
+  "/images/r2/house4.webp",
 ]
 
 export function TestimonialSection() {
@@ -133,35 +133,35 @@ function TestimonialsGlass() {
       quote: "Our SDG&E bill went from $340 to $11. I still can't believe it. RIV Solar changed our lives.",
       author: "Maria G.",
       role: "Homeowner in Temecula",
-      avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80",
+      avatar: "/images/unsplash/avatar4.webp",
     },
     {
       id: 2,
       quote: "After getting quotes from 5 companies, RIV was the only one who didn't pressure us. Honest pricing, quality install.",
       author: "James T.",
       role: "Homeowner in San Diego",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+      avatar: "/images/unsplash/avatar2.webp",
     },
     {
       id: 3,
       quote: "The battery storage was a game-changer. During the last outage, we were the only house on the block with power.",
       author: "Angela R.",
       role: "Homeowner in Riverside",
-      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+      avatar: "/images/unsplash/avatar5.webp",
     },
     {
       id: 4,
       quote: "They explained NEM 3.0 in a way that actually made sense. System was designed perfectly for the new rules.",
       author: "Marcus W.",
       role: "Homeowner in Corona",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+      avatar: "/images/unsplash/avatar1.webp",
     },
     {
       id: 5,
       quote: "Two kids, pool, AC blasting all summer — and our bill is now $15. Should've done this years ago.",
       author: "Lisa & Tom P.",
       role: "Family in Murrieta",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+      avatar: "/images/unsplash/avatar3.webp",
     },
   ]
 

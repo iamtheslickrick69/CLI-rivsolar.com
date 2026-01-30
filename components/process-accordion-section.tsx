@@ -31,7 +31,7 @@ const processItems = [
   {
     id: 5,
     title: "Start Saving",
-    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    imageUrl: "/images/unsplash/house-aerial.webp",
     description: "Watch your savings grow in real-time. Most homeowners see their first reduced bill within 30 days of activation.",
   },
 ]

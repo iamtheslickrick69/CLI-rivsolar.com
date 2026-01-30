@@ -7,22 +7,22 @@ const cardData = [
   {
     heading: "STOP",
     description: "Purchasing your energy from out of state, and hundreds of miles away with heavy fees.",
-    imgSrc: "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/glencanyon2.webp",
+    imgSrc: "/images/r2/glencanyon2.webp",
   },
   {
     heading: "OUTDATED",
     description: "We are still using the same infrastructure that has been around for 100+ years. Stop paying the price for old technology.",
-    imgSrc: "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/pexels.webp",
+    imgSrc: "/images/r2/pexels.webp",
   },
   {
     heading: "CONTROL",
     description: "Take control of your rate and start sending energy back to the grid—not drawing from it.",
-    imgSrc: "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/IMG_7385.webp",
+    imgSrc: "/images/r2/IMG_7385.webp",
   },
   {
     heading: "SAVE",
     description: "Not just today—but for your future, and your children's future.",
-    imgSrc: "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/startsaving.webp",
+    imgSrc: "/images/r2/startsaving.webp",
   },
 ]
 

@@ -10,28 +10,28 @@ import {
 
 const blogItems = [
   {
-    img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
+    img: "/images/unsplash/solar-panels.webp",
     title: "NEM 3.0 Explained",
     desc: "California's new net metering rules changed the game. Here's what every homeowner needs to know about maximizing solar savings in 2025.",
     sliderName: "nem3",
     category: "Policy",
   },
   {
-    img: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?w=1200&q=80",
+    img: "/images/unsplash/solar-roof.webp",
     title: "Why Batteries Matter",
     desc: "Under NEM 3.0, battery storage isn't optional — it's essential. Learn how Tesla Powerwall and Enphase can double your ROI.",
     sliderName: "batteries",
     category: "Technology",
   },
   {
-    img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80",
+    img: "/images/unsplash/calculator.webp",
     title: "30% Tax Credit Guide",
     desc: "The federal solar tax credit puts thousands back in your pocket. Our step-by-step guide shows you exactly how to claim it.",
     sliderName: "taxcredit",
     category: "Savings",
   },
   {
-    img: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&q=80",
+    img: "/images/unsplash/sunset-solar.webp",
     title: "California Rate Hikes",
     desc: "SDG&E, PG&E, and SCE rates are climbing 7-9% every year. See why going solar now saves more than waiting.",
     sliderName: "rates",

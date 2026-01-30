@@ -9,7 +9,7 @@ export function CareersBannerSection() {
       {/* Orange Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/a1house.webp"
+          src="/images/r2/a1house.webp"
           alt="Careers background"
           className="w-full h-full object-cover"
           loading="lazy"

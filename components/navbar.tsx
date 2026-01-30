@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronRight, Menu, X } from "lucide-react"
 import Link from "next/link"
@@ -14,12 +14,39 @@ const navLinks = [
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      // Show navbar when scrolling up or at top
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        setIsVisible(true)
+      }
+      // Hide navbar when scrolling down (after 100px)
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false)
+        setMobileMenuOpen(false) // Close mobile menu when hiding
+      }
+
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [lastScrollY])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-      <div className="w-full max-w-6xl mx-auto">
-        {/* Main navbar container */}
-        <div className="bg-black/80 backdrop-blur-xl border border-[#1a1a1a] rounded-xl px-6 py-3">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      {/* Full-width banner */}
+      <div className="w-full bg-black/90 backdrop-blur-xl border-b border-[#222]">
+        <div className="max-w-6xl mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             {/* Logo - Left - LARGER */}
             <Link
@@ -70,18 +97,19 @@ export function Navbar() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="lg:hidden mt-2 bg-[#111]/95 backdrop-blur-xl border border-[#333] rounded-xl overflow-hidden shadow-2xl"
-            >
-              <div className="px-5 py-5 space-y-1">
+      {/* Mobile Menu - Full width dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="lg:hidden bg-black/95 backdrop-blur-xl border-b border-[#222] overflow-hidden"
+          >
+            <div className="max-w-6xl mx-auto px-6 py-5 space-y-1">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.name}
@@ -99,26 +127,25 @@ export function Navbar() {
                   </motion.div>
                 ))}
 
-                {/* Mobile CTA */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
+              {/* Mobile CTA */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <Link
+                  href="/connect"
+                  className="flex items-center justify-center gap-2 w-full text-sm font-semibold text-black bg-white hover:bg-[#e5e5e5] px-6 py-4 rounded-xl mt-3 transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Link
-                    href="/connect"
-                    className="flex items-center justify-center gap-2 w-full text-sm font-semibold text-black bg-white hover:bg-[#e5e5e5] px-6 py-4 rounded-xl mt-3 transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Connect
-                    <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+                  Connect
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

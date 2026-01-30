@@ -4,22 +4,22 @@ import { ExpandableGallery } from "@/components/ui/gallery-animation"
 
 const financingOptions = [
   {
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    image: "/images/unsplash/house-aerial.webp",
     title: "Purchase",
     description: "Own your system outright. Maximize savings with the 30% federal tax credit. Best long-term ROI.",
   },
   {
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
+    image: "/images/unsplash/modern-house.webp",
     title: "Lease",
     description: "$0 down, fixed monthly payments. No maintenance worries. Start saving from day one.",
   },
   {
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+    image: "/images/unsplash/calculator.webp",
     title: "PPA",
     description: "Power Purchase Agreement. Pay only for the energy you use. Zero upfront cost.",
   },
   {
-    image: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?w=800&q=80",
+    image: "/images/unsplash/solar-roof.webp",
     title: "Battery",
     description: "Tesla Powerwall & Enphase. Backup power during outages. True energy independence.",
   },

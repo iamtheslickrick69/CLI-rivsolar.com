@@ -19,7 +19,7 @@ const stickyContent = [
     link: { text: "Learn More", href: "/solution" },
     content: (
       <Image
-        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/a1house.webp"
+        src="/images/r2/a1house.webp"
         width={800}
         height={600}
         className="h-full w-full object-cover"
@@ -41,7 +41,7 @@ const stickyContent = [
     link: { text: "Learn More", href: "/solution" },
     content: (
       <Image
-        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aweb3house2.webp"
+        src="/images/r2/aweb3house2.webp"
         width={800}
         height={600}
         className="h-full w-full object-cover"
@@ -63,7 +63,7 @@ const stickyContent = [
     link: { text: "Learn More", href: "/solution" },
     content: (
       <Image
-        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/a1house2coolaihomesavings.webp"
+        src="/images/r2/a1house2coolaihomesavings.webp"
         width={800}
         height={600}
         className="h-full w-full object-cover"

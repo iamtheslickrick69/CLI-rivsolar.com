@@ -31,12 +31,12 @@ const solarSteps = [
 
 const solarImages = {
   alt: "RIV Solar Installation Process",
-  step1img1: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
-  step1img2: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
-  step2img1: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
-  step2img2: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80",
-  step3img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
-  step4img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+  step1img1: "/images/unsplash/keys.webp",
+  step1img2: "/images/unsplash/calculator.webp",
+  step2img1: "/images/unsplash/tech.webp",
+  step2img2: "/images/unsplash/energy.webp",
+  step3img: "/images/unsplash/solar-panels.webp",
+  step4img: "/images/unsplash/house-aerial.webp",
 }
 
 export function ProcessCarouselSection() {
