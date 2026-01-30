@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface AccordionItemData {
   id: number;
@@ -58,6 +59,23 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
   );
 };
 
+// Mobile Card Component
+const MobileCard: React.FC<{ item: AccordionItemData }> = ({ item }) => {
+  return (
+    <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+      <img
+        src={item.imageUrl}
+        alt={item.title}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+      <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-xl font-semibold uppercase tracking-wider font-[family-name:var(--font-barlow-condensed)]">
+        {item.title}
+      </span>
+    </div>
+  );
+};
+
 interface ProcessAccordionProps {
   items: AccordionItemData[];
   defaultActive?: number;
@@ -67,11 +85,57 @@ export const ProcessAccordion: React.FC<ProcessAccordionProps> = ({ items, defau
   const [activeIndex, setActiveIndex] = useState(defaultActive);
   const activeItem = items[activeIndex];
 
-  // Calculate fixed width: 4 collapsed (60px) + 1 expanded (420px) + 4 gaps (16px) = 724px on desktop
+  const goNext = () => setActiveIndex((prev) => (prev + 1) % items.length);
+  const goPrev = () => setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
+
   return (
     <div className="flex flex-col">
-      {/* Accordion Images - Fixed width to prevent layout shift */}
-      <div className="flex flex-row items-center justify-start gap-2 md:gap-4 p-4 w-[480px] md:w-[724px] mx-auto overflow-hidden">
+      {/* Mobile: Swipeable single card view */}
+      <div className="md:hidden px-4">
+        <div className="relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <MobileCard item={activeItem} />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={goPrev}
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-800" />
+          </button>
+          <button
+            onClick={goNext}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-800" />
+          </button>
+        </div>
+
+        {/* Dots indicator */}
+        <div className="flex items-center justify-center gap-2 mt-4">
+          {items.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === activeIndex ? 'bg-black w-6' : 'bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: Original accordion layout */}
+      <div className="hidden md:flex flex-row items-center justify-start gap-4 p-4 w-[724px] mx-auto overflow-hidden">
         {items.map((item, index) => (
           <AccordionItem
             key={item.id}
