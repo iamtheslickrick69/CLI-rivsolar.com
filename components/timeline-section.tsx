@@ -420,16 +420,16 @@ export function TimelineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid grid-cols-3 gap-3 sm:gap-4 mt-8"
+            className="grid grid-cols-3 gap-2 sm:gap-4 mt-8"
           >
             {[
               { value: "114%", label: "Rate increase since 2014" },
               { value: "30%", label: "Federal tax credit" },
               { value: "<6 yrs", label: "Average payback period" },
             ].map((stat) => (
-              <div key={stat.label} className="text-center p-4 bg-[#1a1a1a]/90 backdrop-blur-sm rounded-2xl border border-[#333]">
-                <p className="text-xl sm:text-3xl font-bold text-white">{stat.value}</p>
-                <p className="text-xs sm:text-sm text-[#a3a3a3] mt-1">{stat.label}</p>
+              <div key={stat.label} className="text-center p-3 sm:p-4 bg-[#1a1a1a] rounded-2xl border border-[#333]">
+                <p className="text-lg sm:text-3xl font-bold text-white">{stat.value}</p>
+                <p className="text-[10px] sm:text-sm text-[#a3a3a3] mt-1 leading-tight">{stat.label}</p>
               </div>
             ))}
           </motion.div>

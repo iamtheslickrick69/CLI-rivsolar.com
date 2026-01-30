@@ -109,7 +109,7 @@ const whyRivFeatures = [
 
 export function FeatureCardsSection() {
   return (
-    <div className="relative z-20 py-24 bg-black">
+    <div className="relative z-20 pt-20 pb-24 bg-black">
       <div
         className="absolute top-0 left-0 right-0 pointer-events-none"
         style={{
@@ -125,7 +125,7 @@ export function FeatureCardsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex justify-center mb-10"
+            className="flex justify-center mb-10 pt-4"
           >
             <Image
               src="/logopurp.jpeg"
