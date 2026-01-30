@@ -18,7 +18,7 @@ const highlightWords = [
 
 export function MissionSection() {
   return (
-    <section className="bg-white py-32 md:py-40 px-6">
+    <section className="bg-white py-16 md:py-24 lg:py-32 px-6">
       <div className="max-w-4xl mx-auto">
         <MagicText
           text={missionText}

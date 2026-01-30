@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { ChevronRight, Menu, X } from "lucide-react"
 import Link from "next/link"
 
@@ -69,32 +70,52 @@ export function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-2 bg-[#111] border border-[#333] rounded-xl overflow-hidden shadow-xl">
-            <div className="px-4 py-4 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block py-3 text-white hover:text-purple-400 transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="lg:hidden mt-2 bg-[#111]/95 backdrop-blur-xl border border-[#333] rounded-xl overflow-hidden shadow-2xl"
+            >
+              <div className="px-5 py-5 space-y-1">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className="block py-3.5 text-white hover:text-purple-400 transition-colors uppercase tracking-widest font-medium font-[family-name:var(--font-barlow-condensed)]"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
 
-              {/* Mobile CTA */}
-              <Link
-                href="/connect"
-                className="flex items-center justify-center gap-2 w-full text-sm font-semibold text-black bg-white hover:bg-[#e5e5e5] px-6 py-4 rounded-lg mt-4 transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Connect
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        )}
+                {/* Mobile CTA */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <Link
+                    href="/connect"
+                    className="flex items-center justify-center gap-2 w-full text-sm font-semibold text-black bg-white hover:bg-[#e5e5e5] px-6 py-4 rounded-xl mt-3 transition-colors uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Connect
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   )

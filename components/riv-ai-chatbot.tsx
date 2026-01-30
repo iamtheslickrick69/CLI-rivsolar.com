@@ -131,14 +131,14 @@ export function RivAIChatbot() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 group"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 group"
           >
             {/* Pulsing glow ring */}
             <div className="absolute inset-0 rounded-full bg-purple-500/30 animate-ping" />
             <div className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-purple-500 to-purple-600 opacity-60 blur-md group-hover:opacity-80 transition-opacity" />
 
             {/* Icon container */}
-            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-purple-500/50 shadow-lg shadow-purple-500/25">
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-purple-500/50 shadow-lg shadow-purple-500/25">
               <Image
                 src="/purpleicon.jpg"
                 alt="Chat with RIV"
@@ -147,8 +147,8 @@ export function RivAIChatbot() {
               />
             </div>
 
-            {/* Tooltip */}
-            <div className="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-white text-black text-sm font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
+            {/* Tooltip - hidden on mobile */}
+            <div className="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-white text-black text-sm font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg hidden sm:block">
               Chat with RIV
               <div className="absolute top-full right-4 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-white" />
             </div>
@@ -164,7 +164,7 @@ export function RivAIChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] h-[600px] max-h-[80vh] flex flex-col rounded-3xl overflow-hidden shadow-2xl shadow-purple-500/10"
+            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full sm:w-[380px] h-[85vh] sm:h-[600px] sm:max-h-[80vh] flex flex-col sm:rounded-3xl rounded-t-3xl overflow-hidden shadow-2xl shadow-purple-500/10"
             style={{
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",

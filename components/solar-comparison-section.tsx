@@ -284,22 +284,23 @@ export function SolarComparisonSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="inline-flex items-center gap-2 p-1.5 bg-[#1a1a1a] border border-[#333] rounded-full"
+            className="inline-flex items-center gap-1 md:gap-2 p-1 md:p-1.5 bg-[#1a1a1a] border border-[#333] rounded-full"
           >
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
-                  relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 uppercase tracking-wide
+                  relative flex items-center justify-center gap-1.5 md:gap-2 px-3 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 uppercase tracking-wide
                   ${activeTab === tab.id
                     ? "bg-white text-black shadow-lg"
                     : "text-[#a3a3a3] hover:text-white"
                   }
                 `}
               >
-                <tab.icon className="w-4 h-4" />
-                {tab.label}
+                <tab.icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                <span className="hidden xs:inline">{tab.label}</span>
+                <span className="xs:hidden">{tab.id === "comparison" ? "Compare" : "Rates"}</span>
               </button>
             ))}
           </motion.div>

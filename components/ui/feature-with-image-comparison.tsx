@@ -157,12 +157,14 @@ function SolarComparison({ withoutSolar, withSolar, withoutChartSrc, withChartSr
           <GripVertical className="h-4 w-4 text-[#333]" />
         </div>
 
-        {/* Labels */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2">
-          <span className="bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap -translate-x-full -ml-1 uppercase tracking-wide">
+        {/* Labels - positioned on either side of slider */}
+        <div className="absolute top-4 right-full mr-2">
+          <span className="bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap uppercase tracking-wide">
             WITHOUT
           </span>
-          <span className="bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap translate-x-0 ml-1 uppercase tracking-wide">
+        </div>
+        <div className="absolute top-4 left-full ml-2">
+          <span className="bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap uppercase tracking-wide">
             WITH
           </span>
         </div>
