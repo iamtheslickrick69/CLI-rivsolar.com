@@ -309,8 +309,8 @@ export function TimelineSection() {
             </div>
           </motion.div>
 
-          {/* Expanded Details Card - Fixed height locked to 2026 tab size (largest) */}
-          <div className="h-[380px] sm:h-[340px]">
+          {/* Expanded Details Card */}
+          <div className="min-h-[340px]">
             <AnimatePresence mode="wait">
               {selectedData && (
                 <motion.div
@@ -320,7 +320,7 @@ export function TimelineSection() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                   className={cn(
-                    "rounded-3xl border-2 p-6 sm:p-8 transition-colors h-full flex flex-col",
+                    "rounded-3xl border-2 p-5 sm:p-8 transition-colors flex flex-col",
                     selectedData.isNow ? "bg-[#111]/90 backdrop-blur-sm border-white" : "bg-[#1a1a1a]/90 backdrop-blur-sm border-[#333]"
                   )}
                 >
@@ -370,7 +370,7 @@ export function TimelineSection() {
                 )}
 
                 {/* Description */}
-                <p className="text-[#a3a3a3] leading-relaxed text-base flex-grow">
+                <p className="text-[#a3a3a3] leading-relaxed text-sm sm:text-base">
                   {selectedData.description}
                 </p>
 
