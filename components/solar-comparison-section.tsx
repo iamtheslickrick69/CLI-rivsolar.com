@@ -320,8 +320,8 @@ export function SolarComparisonSection() {
               <SolarComparison
                 withoutSolar={withoutSolarItems}
                 withSolar={withSolarItems}
-                withoutChartSrc="/charts/without-solar.jpg"
-                withChartSrc="/charts/with-solar.jpg"
+                withoutChartSrc="/charts/without-solar.webp"
+                withChartSrc="/charts/with-solar.webp"
               />
 
               {/* Bottom CTA for comparison */}

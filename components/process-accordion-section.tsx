@@ -7,25 +7,25 @@ const processItems = [
   {
     id: 1,
     title: "Free Consultation",
-    imageUrl: "/process/comparison.jpg",
+    imageUrl: "/process/comparison.webp",
     description: "One of our licensed experts will give you a completely free and accurate side-by-side comparison showing you all of your energy options. Solar is not for everyone — we let the numbers speak for themselves.",
   },
   {
     id: 2,
     title: "Custom Design",
-    imageUrl: "/process/blueprint.jpg",
+    imageUrl: "/process/blueprint.webp",
     description: "Our engineers design a system tailored to your home, roof layout, and energy usage. Every panel placement is optimized for maximum savings.",
   },
   {
     id: 3,
     title: "Professional Install",
-    imageUrl: "/process/professionalinstall.jpg",
+    imageUrl: "/process/professionalinstall.webp",
     description: "Our in-house certified installers handle everything — no subcontractors. Most installations are completed in just 1-2 days.",
   },
   {
     id: 4,
     title: "System Activation",
-    imageUrl: "/process/activation.jpg",
+    imageUrl: "/process/activation.webp",
     description: "We handle all permits, inspections, and utility paperwork. Once approved, we flip the switch and your system goes live.",
   },
   {

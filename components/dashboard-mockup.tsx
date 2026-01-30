@@ -64,7 +64,7 @@ export function DashboardMockup() {
         <div className="flex-1 p-4 overflow-hidden relative">
           <div className="w-full h-full rounded-xl overflow-hidden border border-zinc-800/50 shadow-2xl">
             <img
-              src="/scebill.jpg"
+              src="/scebill.webp"
               alt="SCE Electric Bill"
               className="w-full h-full object-cover object-top"
             />

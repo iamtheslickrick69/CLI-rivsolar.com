@@ -2,16 +2,20 @@
 
 import { motion } from "framer-motion"
 import { Sparkles, Play, Shield, Star, Users, DollarSign, Award } from "lucide-react"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden">
       {/* Background Image - NO TINT - Full brightness */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/AdobeStock_599718178.jpeg"
+        <Image
+          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/adobestock.webp"
           alt="Solar panels on California home"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
         />
         {/* Gradient ONLY on left side for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
@@ -113,7 +117,7 @@ export function HeroSection() {
               className="lg:w-1/2 flex justify-center lg:justify-end"
             >
               <img
-                src="/transwhite.jpeg"
+                src="/transwhite.webp"
                 alt="RIV Solar"
                 className="h-48 md:h-64 lg:h-80 xl:h-96 w-auto object-contain drop-shadow-2xl"
               />

@@ -32,6 +32,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
         src={item.imageUrl}
         alt={item.title}
         className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
       />
       {/* Dark overlay - reduced for brighter images */}
       <div className={`absolute inset-0 transition-opacity duration-300 ${isActive ? 'bg-black/20' : 'bg-black/40'}`} />
@@ -67,6 +68,7 @@ const MobileCard: React.FC<{ item: AccordionItemData }> = ({ item }) => {
         src={item.imageUrl}
         alt={item.title}
         className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
       <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-xl font-semibold uppercase tracking-wider font-[family-name:var(--font-barlow-condensed)]">

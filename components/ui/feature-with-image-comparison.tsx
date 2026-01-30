@@ -65,6 +65,7 @@ function SolarComparison({ withoutSolar, withSolar, withoutChartSrc, withChartSr
                 src={withoutChartSrc}
                 alt="Energy purchased from grid"
                 className="w-full h-[140px] md:h-[160px] object-contain"
+                loading="lazy"
               />
             </div>
           )}
@@ -117,6 +118,7 @@ function SolarComparison({ withoutSolar, withSolar, withoutChartSrc, withChartSr
                 src={withChartSrc}
                 alt="Energy sent back to grid"
                 className="w-full h-[140px] md:h-[160px] object-contain"
+                loading="lazy"
               />
             </div>
           )}

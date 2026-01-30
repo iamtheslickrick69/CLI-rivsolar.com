@@ -27,8 +27,10 @@ export function Navbar() {
               className="flex items-center"
             >
               <img
-                src="/transwhite.jpeg"
+                src="/transwhite.webp"
                 alt="RIV Solar"
+                width={84}
+                height={56}
                 className="h-14 w-auto object-contain"
               />
             </Link>

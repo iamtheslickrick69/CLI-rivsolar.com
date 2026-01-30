@@ -6,9 +6,9 @@ import { Star, Shield, Quote } from "lucide-react"
 
 // Background images that rotate
 const backgroundImages = [
-  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.jpg",
-  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house1.jpg",
-  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house4.jpg",
+  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.webp",
+  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house1.webp",
+  "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house4.webp",
 ]
 
 export function TestimonialSection() {
@@ -45,7 +45,7 @@ export function TestimonialSection() {
             <img
               src={src}
               alt="California home with solar"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover" loading="lazy"
             />
           </motion.div>
         ))}

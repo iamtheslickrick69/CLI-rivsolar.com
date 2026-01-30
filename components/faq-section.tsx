@@ -37,7 +37,7 @@ const faqItems = [
     id: "item-6",
     title: "Why choose RIV Solar?",
     content: "RIV Solar is Californians helping Californians. We use Tier-1 equipment, in-house installation crews (no subcontractors), and offer AI-powered tools like our 24/7 RIV Chatbot and Bill Analyzer that no competitor has. Plus, our transparent, no-pressure approach means honest pricing and real answers.",
-    image: "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/AdobeStock_599718178.jpeg",
+    image: "https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/adobestock.webp",
   },
 ]
 

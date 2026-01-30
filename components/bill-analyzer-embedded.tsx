@@ -63,7 +63,7 @@ interface BillAnalysis {
 // Mock data based on the real SCE bill
 const mockAnalysis: BillAnalysis = {
   utility: "Southern California Edison",
-  utilityLogo: "/SCE.jpeg",
+  utilityLogo: "/SCE.webp",
   accountHolder: "SUAREZ, HERLINDA",
   serviceAddress: "1366 S PLEASANT AVE, ONTARIO, CA 91761",
   billingPeriod: "09/10/24 - 10/08/24",
@@ -334,9 +334,9 @@ export function BillAnalyzerEmbedded({ compact = false }: { compact?: boolean })
 
                   {/* Utility logos */}
                   <div className={cn("flex items-center gap-4", compact ? "mt-5" : "mt-8")}>
-                    <img src="/PGE.jpeg" alt="PG&E" className={cn("opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all rounded", compact ? "h-6" : "h-8")} />
-                    <img src="/SDGE.jpeg" alt="SDG&E" className={cn("opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all rounded", compact ? "h-6" : "h-8")} />
-                    <img src="/SCE.jpeg" alt="SCE" className={cn("opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all rounded", compact ? "h-6" : "h-8")} />
+                    <img src="/PGE.webp" alt="PG&E" className={cn("opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all rounded", compact ? "h-6" : "h-8")} loading="lazy" />
+                    <img src="/SDGE.webp" alt="SDG&E" className={cn("opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all rounded", compact ? "h-6" : "h-8")} loading="lazy" />
+                    <img src="/SCE.webp" alt="SCE" className={cn("opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all rounded", compact ? "h-6" : "h-8")} loading="lazy" />
                   </div>
 
                   {/* Privacy note */}

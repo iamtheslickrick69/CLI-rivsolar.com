@@ -9,11 +9,13 @@ function HoverFooterSection() {
     <SimpleFooter
       logo={
         <Image
-          src="/logopurp.jpeg"
+          src="/logopurp.webp"
           alt="RIV Solar"
           width={48}
           height={48}
           className="rounded-xl"
+          style={{ width: 'auto', height: 'auto' }}
+          loading="lazy"
         />
       }
       brandName="RIV Solar"

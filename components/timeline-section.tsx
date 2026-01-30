@@ -94,6 +94,8 @@ const timelineData: TimelineYear[] = [
 export function TimelineSection() {
   const [selectedYear, setSelectedYear] = useState<string>("2026")
   const [activeVideo, setActiveVideo] = useState<1 | 2 | 3>(1)
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
   const video1Ref = useRef<HTMLVideoElement>(null)
   const video2Ref = useRef<HTMLVideoElement>(null)
   const video3Ref = useRef<HTMLVideoElement>(null)
@@ -104,6 +106,28 @@ export function TimelineSection() {
   // Calculate position for slider (0-100%)
   const selectedIndex = timelineData.findIndex(d => d.year === selectedYear)
   const sliderPosition = (selectedIndex / (timelineData.length - 1)) * 100
+
+  // Intersection Observer - only load/play videos when section is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true)
+          // Start playing video 1 when section becomes visible
+          if (video1Ref.current) {
+            video1Ref.current.play()
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [isVisible])
 
   // Handle video 1 ending - transition to video 2
   const handleVideo1End = () => {
@@ -136,40 +160,42 @@ export function TimelineSection() {
     setActiveVideo(1)
   }
 
-  // Lazy load videos only when needed (after first video plays)
+  // Lazy load videos only when section is visible
   useEffect(() => {
+    if (!isVisible) return
     // Load video 2 after a delay to not block initial render
     const timer = setTimeout(() => {
       if (video2Ref.current) video2Ref.current.load()
     }, 3000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [isVisible])
 
   return (
-    <section className="relative z-20 overflow-hidden">
+    <section ref={sectionRef} className="relative z-20 overflow-hidden">
       {/* Video Background - Optimized for fast loading */}
       <div className="absolute inset-0 z-0">
         {/* Static image fallback - loads instantly */}
         <img
-          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.jpg"
+          src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.webp"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
         />
 
         {/* Video 1 - solarvid.mp4 */}
         <video
           ref={video1Ref}
-          autoPlay
           muted
           playsInline
-          preload="metadata"
+          preload="none"
+          poster="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house3.webp"
           onEnded={handleVideo1End}
           className={cn(
             "absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms]",
             activeVideo === 1 ? "opacity-100" : "opacity-0"
           )}
         >
-          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/solarvid.mp4#t=0.001" type="video/mp4" />
+          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aasolarvid.mp4#t=0.001" type="video/mp4" />
         </video>
 
         {/* Video 2 - vidhome5.mp4 (plays for 14 seconds) */}
@@ -184,7 +210,7 @@ export function TimelineSection() {
             activeVideo === 2 ? "opacity-100" : "opacity-0"
           )}
         >
-          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/vidhome5.mp4#t=0.001" type="video/mp4" />
+          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aavidhome5.mp4#t=0.001" type="video/mp4" />
         </video>
 
         {/* Video 3 - solarrooftops.mp4 (plays to end, then loops back to video 1) */}
@@ -199,7 +225,7 @@ export function TimelineSection() {
             activeVideo === 3 ? "opacity-100" : "opacity-0"
           )}
         >
-          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/solarrooftops.mp4#t=0.001" type="video/mp4" />
+          <source src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aasolarrooftops.mp4#t=0.001" type="video/mp4" />
         </video>
 
         {/* Light overlay for text readability - BRIGHTER */}

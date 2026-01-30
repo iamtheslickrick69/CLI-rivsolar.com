@@ -140,7 +140,7 @@ export function RivAIChatbot() {
             {/* Icon container */}
             <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-purple-500/50 shadow-lg shadow-purple-500/25">
               <Image
-                src="/purpleicon.jpg"
+                src="/purpleicon.webp"
                 alt="Chat with RIV"
                 fill
                 className="object-cover"
@@ -180,7 +180,7 @@ export function RivAIChatbot() {
                 <div className="flex items-center gap-3">
                   <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500/30">
                     <Image
-                      src="/purpleicon.jpg"
+                      src="/purpleicon.webp"
                       alt="RIV AI"
                       fill
                       className="object-cover"
@@ -213,7 +213,7 @@ export function RivAIChatbot() {
             </div>
 
             {/* Messages */}
-            <div className="relative z-10 flex-1 overflow-y-auto px-4 py-4 space-y-4">
+            <div className="relative z-10 flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ position: 'relative' }}>
               {messages.map((message) => (
                 <motion.div
                   key={message.id}

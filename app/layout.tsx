@@ -32,6 +32,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/adobestock.webp"
+          as="image"
+          type="image/webp"
+        />
+      </head>
       <body className={`${barlow.variable} ${barlowCondensed.variable} font-sans antialiased bg-black text-white`}>
         {children}
         <RivAIChatbot />

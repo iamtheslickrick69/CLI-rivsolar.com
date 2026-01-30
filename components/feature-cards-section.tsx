@@ -19,12 +19,12 @@ const stickyContent = [
     link: { text: "Learn More", href: "/solution" },
     content: (
       <Image
-        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/IMG_7388.JPG"
+        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/a1house.webp"
         width={800}
         height={600}
         className="h-full w-full object-cover"
         alt="Solar panel installation"
-        unoptimized
+                loading="lazy"
       />
     ),
   },
@@ -41,12 +41,12 @@ const stickyContent = [
     link: { text: "Learn More", href: "/solution" },
     content: (
       <Image
-        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/house2.jpg"
+        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/aweb3house2.webp"
         width={800}
         height={600}
         className="h-full w-full object-cover"
         alt="Home with battery storage"
-        unoptimized
+                loading="lazy"
       />
     ),
   },
@@ -63,12 +63,12 @@ const stickyContent = [
     link: { text: "Learn More", href: "/solution" },
     content: (
       <Image
-        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/coolaihomesavings.jpg"
+        src="https://pub-716deb83cd7742f6beb7fe0ea0cdebcb.r2.dev/a1house2coolaihomesavings.webp"
         width={800}
         height={600}
         className="h-full w-full object-cover"
         alt="Solar savings visualization"
-        unoptimized
+                loading="lazy"
       />
     ),
   },
@@ -128,11 +128,13 @@ export function FeatureCardsSection() {
             className="flex justify-center mb-10 pt-4"
           >
             <Image
-              src="/logopurp.jpeg"
+              src="/logopurp.webp"
               width={80}
               height={80}
               alt="RIV Solar"
               className="rounded-xl"
+              style={{ width: 'auto', height: 'auto' }}
+              loading="lazy"
             />
           </motion.div>
 

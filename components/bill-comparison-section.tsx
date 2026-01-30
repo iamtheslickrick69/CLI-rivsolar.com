@@ -76,7 +76,7 @@ export function BillComparisonSection() {
                 <div className="p-6 relative">
                   <div className="rounded-2xl overflow-hidden border border-zinc-700/50 shadow-xl">
                     <img
-                      src="/scebill.jpg"
+                      src="/scebill.webp"
                       alt="SCE Electric Bill"
                       className="w-full h-auto max-h-[400px] object-cover object-top"
                     />
