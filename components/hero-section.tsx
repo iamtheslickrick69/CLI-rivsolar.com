@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Sparkles, Play, Shield, Star, Users, DollarSign, Award } from "lucide-react"
+import { Sparkles, Play, Shield, Star, Users, DollarSign, Award, ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 export function HeroSection() {
@@ -26,21 +26,10 @@ export function HeroSection() {
       {/* Main Content Area */}
       <div className="relative z-10 flex-1 flex items-center">
         <div className="w-full max-w-7xl mx-auto px-6 py-16">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
 
             {/* Left Side - Text Content */}
             <div className="lg:w-1/2">
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2.5 mb-8"
-              >
-                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                <span className="text-white text-sm font-medium uppercase tracking-wide">Rated 5 Stars by 2,500+ California Homeowners</span>
-              </motion.div>
-
               {/* Headline */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -73,40 +62,20 @@ export function HeroSection() {
               >
                 <a
                   href="#"
-                  className="group relative inline-flex items-center gap-2 text-base font-semibold text-black bg-white hover:bg-gray-100 px-8 py-4 rounded-xl transition-all uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)] shadow-2xl shadow-white/25"
+                  className="group relative inline-flex items-center gap-3 text-base font-semibold text-black bg-white hover:bg-gray-100 px-8 py-4 rounded-xl transition-all uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)] shadow-2xl shadow-white/25"
                 >
-                  <Sparkles className="w-5 h-5" />
-                  GET YOUR FREE QUOTE
+                  Talk to a Pro
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
                   href="#"
-                  className="inline-flex items-center gap-3 text-white hover:text-white/80 transition-colors font-medium"
+                  className="group relative inline-flex items-center gap-2 text-base font-semibold text-white bg-purple-600 hover:bg-purple-500 px-8 py-4 rounded-xl transition-all uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)] shadow-2xl shadow-purple-600/25 border border-purple-500"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all">
-                    <Play className="w-6 h-6 text-white ml-0.5" fill="white" />
-                  </div>
-                  <span className="uppercase tracking-widest text-sm font-[family-name:var(--font-barlow-condensed)]">Watch How It Works</span>
+                  <Sparkles className="w-5 h-5" />
+                  Try AI Calculator
                 </a>
               </motion.div>
 
-              {/* Trust indicators */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex flex-wrap items-center gap-3"
-              >
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
-                  <Shield className="w-4 h-4 text-white" />
-                  <span className="text-white/90 text-sm">25-Year Warranty</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
-                  <span className="text-white/90 text-sm">Licensed & Insured</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
-                  <span className="text-white/90 text-sm">BBB A+ Rated</span>
-                </div>
-              </motion.div>
             </div>
 
             {/* Right Side - LARGE LOGO */}
@@ -114,10 +83,10 @@ export function HeroSection() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:w-1/2 flex justify-center lg:justify-end"
+              className="lg:w-1/2 flex items-start justify-center lg:justify-end"
             >
               <img
-                src="/transwhite.webp"
+                src="/riv-solar-logo.jpg"
                 alt="RIV Solar"
                 className="h-48 md:h-64 lg:h-80 xl:h-96 w-auto object-contain drop-shadow-2xl"
               />

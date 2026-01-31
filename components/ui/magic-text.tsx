@@ -22,7 +22,7 @@ const Word: React.FC<WordProps> = ({ children, progress, range, isHighlight }) =
 
   return (
     <span className="relative mr-2 md:mr-3">
-      <span className={`absolute ${isHighlight ? "opacity-10" : "opacity-15"}`}>
+      <span className="absolute opacity-0">
         {children}
       </span>
       <motion.span

@@ -16,12 +16,19 @@ import { BillAnalyzerEmbedded } from "@/components/bill-analyzer-embedded"
 export function AISectionHome() {
   return (
     <section className="relative overflow-hidden">
-      {/* Grain Gradient Background - Contained within section */}
+      {/* Grain Gradient Background - Darkened */}
       <div className="absolute inset-0 z-0">
         <GrainGradient
-          {...grainGradientPresets[0]}
+          color1="#1a0a2e"
+          color2="#0d0015"
+          color3="#150820"
+          color4="#000000"
+          grain="medium"
+          speed={0.03}
           style={{ position: "absolute", inset: 0 }}
         />
+        {/* Dark overlay to ensure readability */}
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Content - Condensed padding */}

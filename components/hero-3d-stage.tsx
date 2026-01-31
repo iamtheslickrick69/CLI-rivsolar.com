@@ -2,7 +2,6 @@
 
 import { Navbar } from "./navbar"
 import { HeroSection } from "./hero-section"
-import { TimelineSection } from "./timeline-section"
 import { ProcessAccordionSection } from "./process-accordion-section"
 import { SolarComparisonSection } from "./solar-comparison-section"
 import { TestimonialSection } from "./testimonial-section"
@@ -17,6 +16,7 @@ import { CareersBannerSection } from "./careers-banner-section"
 import { MissionSection } from "./mission-section"
 import { DitheringCTASection } from "./dithering-cta-section"
 import { HoverFooterSection } from "./hover-footer-section"
+import { TestimonialSphereSection } from "./testimonial-sphere-section"
 
 export function Hero3DStage() {
   return (
@@ -24,9 +24,9 @@ export function Hero3DStage() {
       <Navbar />
       <main className="bg-white">
         <HeroSection />
+        <TestimonialSphereSection />
         <MissionSection />
         <ProcessAccordionSection />
-        <TimelineSection />
         <SolarComparisonSection />
         <TestimonialSection />
         <SolarMetricsSection />

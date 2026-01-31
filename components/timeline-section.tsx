@@ -1,342 +1,279 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Zap, ChevronRight, TrendingUp, AlertTriangle, Sparkles } from "lucide-react"
+import { useState, useRef } from "react"
+import { motion, useInView } from "framer-motion"
+import { Zap, ChevronRight, TrendingUp, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-interface TimelineYear {
+interface RateData {
   year: string
-  title: string
-  rates: { utility: string; rate: string }[]
-  description: string
-  highlight?: string
-  highlightIcon?: string
+  rate: number // cents per kWh (avg)
+  bill: number // avg monthly bill
   isNow?: boolean
   isFuture?: boolean
 }
 
-const timelineData: TimelineYear[] = [
-  {
-    year: "2014",
-    title: "The Baseline",
-    rates: [
-      { utility: "PG&E", rate: "21¢" },
-      { utility: "SCE", rate: "17¢" },
-      { utility: "SDG&E", rate: "22¢" },
-    ],
-    description: "California electricity was already expensive but manageable. Most families paid $150-180/month. Federal solar tax credit was 30%, but few homeowners took advantage.",
-  },
-  {
-    year: "2018",
-    title: "Solar Mandate",
-    rates: [
-      { utility: "PG&E", rate: "24¢" },
-      { utility: "SCE", rate: "19¢" },
-      { utility: "SDG&E", rate: "25¢" },
-    ],
-    description: "California becomes the first state in America to require solar panels on all new home construction. A turning point for residential solar adoption.",
-    highlight: "FIRST STATE TO MANDATE SOLAR",
-    highlightIcon: "🏛️",
-  },
-  {
-    year: "2020",
-    title: "Title 24 Update",
-    rates: [
-      { utility: "PG&E", rate: "28¢" },
-      { utility: "SCE", rate: "23¢" },
-      { utility: "SDG&E", rate: "32¢" },
-    ],
-    description: "California's building efficiency standards get stricter. Energy costs continue climbing as demand increases and infrastructure ages.",
-    highlight: "RATES UP 25% IN 6 YEARS",
-    highlightIcon: "📈",
-  },
-  {
-    year: "2022",
-    title: "Inflation Reduction Act",
-    rates: [
-      { utility: "PG&E", rate: "36¢" },
-      { utility: "SCE", rate: "32¢" },
-      { utility: "SDG&E", rate: "45¢" },
-    ],
-    description: "The 30% federal tax credit is extended through 2032. Best opportunity to go solar since the program began. Many homeowners rush to lock in savings.",
-    highlight: "30% TAX CREDIT EXTENDED",
-    highlightIcon: "💰",
-  },
-  {
-    year: "2026",
-    title: "Right Now",
-    rates: [
-      { utility: "PG&E", rate: "45¢" },
-      { utility: "SCE", rate: "42¢" },
-      { utility: "SDG&E", rate: "55¢" },
-    ],
-    description: "California has the highest electricity rates in the continental US. The average family now pays $300-400/month. Solar payback period is under 6 years.",
-    highlight: "BEST TIME TO GO SOLAR",
-    highlightIcon: "⚡",
-    isNow: true,
-  },
-  {
-    year: "2030",
-    title: "Projected",
-    rates: [
-      { utility: "PG&E", rate: "60¢+" },
-      { utility: "SCE", rate: "55¢+" },
-      { utility: "SDG&E", rate: "70¢+" },
-    ],
-    description: "Based on current trends, rates could increase another 30-40%. Waiting costs the average homeowner $10,000+ in lost savings.",
-    highlight: "DON'T WAIT",
-    highlightIcon: "⚠️",
-    isFuture: true,
-  },
+const rateData: RateData[] = [
+  { year: "2014", rate: 20, bill: 165 },
+  { year: "2018", rate: 23, bill: 195 },
+  { year: "2020", rate: 28, bill: 240 },
+  { year: "2022", rate: 38, bill: 310 },
+  { year: "2026", rate: 47, bill: 385, isNow: true },
+  { year: "2030", rate: 62, bill: 510, isFuture: true },
 ]
+
+const maxRate = 70 // for scaling bars
 
 export function TimelineSection() {
   const [selectedYear, setSelectedYear] = useState<string>("2026")
+  const chartRef = useRef(null)
+  const isInView = useInView(chartRef, { once: true, margin: "-100px" })
 
-  const selectedData = timelineData.find((d) => d.year === selectedYear)
+  const selectedData = rateData.find((d) => d.year === selectedYear)
+  const baselineData = rateData[0] // 2014
 
-  // Calculate position for slider (0-100%)
-  const selectedIndex = timelineData.findIndex(d => d.year === selectedYear)
-  const sliderPosition = (selectedIndex / (timelineData.length - 1)) * 100
+  // Calculate increase from baseline
+  const rateIncrease = selectedData ? Math.round(((selectedData.rate - baselineData.rate) / baselineData.rate) * 100) : 0
+  const billIncrease = selectedData ? selectedData.bill - baselineData.bill : 0
 
   return (
     <section className="relative z-20 overflow-hidden">
-      {/* Background - Static image only for reliability */}
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
           src="/images/r2/house3.webp"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
       <div className="relative z-10 py-20 px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a]/90 backdrop-blur-sm border border-[#333] rounded-full mb-4">
-              <Zap className="w-4 h-4 text-[#a3a3a3]" />
-              <span className="text-[#a3a3a3] text-sm font-medium uppercase tracking-wide">California Solar Timeline</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-4">
+              <Zap className="w-4 h-4 text-yellow-400" />
+              <span className="text-white/80 text-sm font-medium uppercase tracking-wide">California Rate History</span>
             </div>
 
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl text-white mb-4 uppercase font-[family-name:var(--font-barlow-condensed)]"
-              style={{
-                letterSpacing: "-0.02em",
-                fontWeight: 600,
-                lineHeight: 1.2,
-              }}
-            >
-              The 6 Moments That Matter
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-white mb-4 uppercase font-[family-name:var(--font-barlow-condensed)]"
+              style={{ letterSpacing: "-0.02em", fontWeight: 600, lineHeight: 1.2 }}>
+              Watch Your Rates <span className="text-yellow-400">Climb</span>
             </h2>
 
-            <p className="text-[#a3a3a3] max-w-xl mx-auto">
-              Why waiting costs you more every year — and why 2026 is the year to act.
+            <p className="text-white/60 max-w-xl mx-auto">
+              California electricity rates have more than doubled since 2014. See exactly how much you're paying — and how much you'll pay if you wait.
             </p>
           </motion.div>
 
-          {/* Year Selector Row */}
+          {/* Animated Bar Chart */}
+          <motion.div
+            ref={chartRef}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <div className="flex items-end justify-between gap-2 sm:gap-4 h-[300px] px-4">
+              {rateData.map((item, idx) => {
+                const barHeight = (item.rate / maxRate) * 100
+                const isSelected = selectedYear === item.year
+
+                return (
+                  <button
+                    key={item.year}
+                    onClick={() => setSelectedYear(item.year)}
+                    className="flex-1 flex flex-col items-center group"
+                  >
+                    {/* Bar */}
+                    <div className="w-full relative flex flex-col items-center justify-end h-[220px]">
+                      <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: isInView ? `${barHeight}%` : 0 }}
+                        transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
+                        className={cn(
+                          "w-full rounded-t-xl transition-all duration-300 relative overflow-hidden",
+                          isSelected
+                            ? item.isNow
+                              ? "bg-yellow-400"
+                              : item.isFuture
+                                ? "bg-red-500"
+                                : "bg-white"
+                            : "bg-white/30 group-hover:bg-white/50"
+                        )}
+                      >
+                        {/* Pulse animation for NOW */}
+                        {item.isNow && isSelected && (
+                          <motion.div
+                            className="absolute inset-0 bg-yellow-300"
+                            animate={{ opacity: [0.5, 0, 0.5] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          />
+                        )}
+                      </motion.div>
+
+                      {/* Rate label on bar */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: isInView ? 1 : 0 }}
+                        transition={{ duration: 0.4, delay: idx * 0.1 + 0.5 }}
+                        className={cn(
+                          "absolute -top-8 text-sm font-bold transition-colors",
+                          isSelected ? "text-white" : "text-white/50"
+                        )}
+                      >
+                        {item.rate}¢
+                      </motion.div>
+                    </div>
+
+                    {/* Year label */}
+                    <div className={cn(
+                      "mt-3 text-center transition-all duration-300",
+                      isSelected ? "scale-110" : ""
+                    )}>
+                      {item.isNow && (
+                        <span className="block text-[10px] font-bold text-yellow-400 uppercase mb-1">Now</span>
+                      )}
+                      {item.isFuture && (
+                        <span className="block text-[10px] font-bold text-red-400 uppercase mb-1">Soon</span>
+                      )}
+                      <span className={cn(
+                        "text-sm sm:text-base font-bold transition-colors",
+                        isSelected ? "text-white" : "text-white/50"
+                      )}>
+                        {item.year}
+                      </span>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* X-axis line */}
+            <div className="h-px bg-white/20 mx-4 mt-2" />
+          </motion.div>
+
+          {/* Bill Comparison Cards */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-6"
-          >
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-              {timelineData.map((item) => (
-                <button
-                  key={item.year}
-                  onClick={() => setSelectedYear(item.year)}
-                  className={cn(
-                    "relative px-4 sm:px-6 py-3 sm:py-4 rounded-2xl border-2 transition-all duration-300 backdrop-blur-sm",
-                    selectedYear === item.year
-                      ? "bg-white border-white"
-                      : "bg-[#1a1a1a]/90 border-[#333] hover:border-[#444]"
-                  )}
-                >
-                  {item.isNow && (
-                    <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-white text-black text-[10px] font-bold rounded-full">
-                      NOW
-                    </span>
-                  )}
-                  {item.isFuture && (
-                    <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-[#6b6b6b] text-white text-[10px] font-bold rounded-full">
-                      SOON
-                    </span>
-                  )}
-                  <p className={cn(
-                    "text-xl sm:text-2xl font-bold transition-colors",
-                    selectedYear === item.year ? "text-black" : "text-[#6b6b6b]"
-                  )}>
-                    {item.year}
-                  </p>
-                  <p className={cn(
-                    "text-xs sm:text-sm font-medium transition-colors",
-                    selectedYear === item.year ? "text-[#6b6b6b]" : "text-[#6b6b6b]"
-                  )}>
-                    {item.rates[0].rate}
-                  </p>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Rate Growth Bar */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-8 px-4"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
           >
-            <div className="relative">
-              {/* Track */}
-              <div className="h-3 bg-gradient-to-r from-[#333] via-[#555] to-white rounded-full overflow-hidden" />
-
-              {/* Slider indicator */}
-              <motion.div
-                className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white border-4 border-black rounded-full"
-                animate={{ left: `calc(${sliderPosition}% - 10px)` }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
+            {/* Then Card */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+              <p className="text-white/50 text-sm uppercase tracking-wide mb-2">2014 Average Bill</p>
+              <p className="text-4xl sm:text-5xl font-bold text-white mb-2">
+                ${baselineData.bill}<span className="text-xl text-white/50">/mo</span>
+              </p>
+              <p className="text-white/40 text-sm">At {baselineData.rate}¢ per kWh</p>
             </div>
-            <div className="flex justify-between mt-3 text-xs text-[#6b6b6b] font-medium">
-              <span>17¢/kWh</span>
-              <span className="text-white">70¢+/kWh</span>
+
+            {/* Now Card */}
+            <div className={cn(
+              "rounded-2xl p-6 border-2 relative overflow-hidden",
+              selectedData?.isNow
+                ? "bg-yellow-400/10 border-yellow-400"
+                : selectedData?.isFuture
+                  ? "bg-red-500/10 border-red-500"
+                  : "bg-white/10 border-white/30"
+            )}>
+              {selectedData?.isNow && (
+                <div className="absolute top-3 right-3">
+                  <span className="px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full">YOU ARE HERE</span>
+                </div>
+              )}
+              {selectedData?.isFuture && (
+                <div className="absolute top-3 right-3">
+                  <span className="px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-full">PROJECTED</span>
+                </div>
+              )}
+              <p className="text-white/50 text-sm uppercase tracking-wide mb-2">{selectedYear} Average Bill</p>
+              <p className={cn(
+                "text-4xl sm:text-5xl font-bold mb-2",
+                selectedData?.isNow ? "text-yellow-400" : selectedData?.isFuture ? "text-red-400" : "text-white"
+              )}>
+                ${selectedData?.bill}<span className="text-xl text-white/50">/mo</span>
+              </p>
+              <p className="text-white/40 text-sm">At {selectedData?.rate}¢ per kWh</p>
             </div>
           </motion.div>
 
-          {/* Expanded Details Card */}
-          <div className="min-h-[340px]">
-            <AnimatePresence mode="wait">
-              {selectedData && (
-                <motion.div
-                  key={selectedData.year}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }}
-                  className={cn(
-                    "rounded-3xl border-2 p-5 sm:p-8 transition-colors flex flex-col",
-                    selectedData.isNow ? "bg-[#111]/90 backdrop-blur-sm border-white" : "bg-[#1a1a1a]/90 backdrop-blur-sm border-[#333]"
-                  )}
-                >
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-3xl sm:text-4xl font-bold text-white">
-                        {selectedData.year}
-                      </span>
-                      {selectedData.isNow && (
-                        <span className="flex items-center gap-1 px-3 py-1 bg-white text-black text-sm font-semibold rounded-full">
-                          <Sparkles className="w-4 h-4" />
-                          You Are Here
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-semibold text-white uppercase font-[family-name:var(--font-barlow-condensed)]">
-                      {selectedData.title}
-                    </h3>
-                  </div>
+          {/* Increase Stats Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-4 mb-8"
+          >
+            <div className="flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full">
+              <TrendingUp className="w-5 h-5 text-red-400" />
+              <span className="text-white font-semibold">
+                +{rateIncrease}% rate increase
+              </span>
+            </div>
+            <div className="flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full">
+              <span className="text-2xl">💸</span>
+              <span className="text-white font-semibold">
+                +${billIncrease}/mo more than 2014
+              </span>
+            </div>
+            <div className="flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full">
+              <span className="text-2xl">📅</span>
+              <span className="text-white font-semibold">
+                +${billIncrease * 12}/yr extra
+              </span>
+            </div>
+          </motion.div>
 
-                  {/* Rate Pills */}
-                  <div className="flex flex-wrap gap-2">
-                    {selectedData.rates.map((rate) => (
-                      <div
-                        key={rate.utility}
-                        className="px-3 py-2 rounded-xl border border-[#333] bg-[#111] text-sm font-medium"
-                      >
-                        <span className="text-[#a3a3a3]">{rate.utility}</span>{" "}
-                        <span className="font-bold text-white">{rate.rate}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Highlight Box */}
-                {selectedData.highlight && (
-                  <div className={cn(
-                    "flex items-center gap-3 p-4 rounded-2xl mb-4",
-                    selectedData.isNow || selectedData.isFuture ? "bg-[#1a1a1a]" : "bg-[#111]"
-                  )}>
-                    <span className="text-2xl">{selectedData.highlightIcon}</span>
-                    <span className="font-bold text-sm sm:text-base text-white">
-                      {selectedData.highlight}
-                    </span>
-                  </div>
-                )}
-
-                {/* Description */}
-                <p className="text-[#a3a3a3] leading-relaxed text-sm sm:text-base">
-                  {selectedData.description}
-                </p>
-
-                {/* CTA for "NOW" */}
-                {selectedData.isNow && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.15, duration: 0.2 }}
-                    className="mt-4 pt-4 border-t border-[#333]"
-                  >
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-[#a3a3a3] text-sm">
-                        <TrendingUp className="w-4 h-4" />
-                        <span className="font-medium">Rates have more than doubled since 2014</span>
-                      </div>
-                      <button className="px-4 py-2 sm:px-6 sm:py-3 bg-white hover:bg-[#e5e5e5] text-black text-sm font-semibold rounded-lg transition-colors flex items-center gap-2 uppercase tracking-widest font-[family-name:var(--font-barlow-condensed)]">
-                        LOCK IN TODAY'S RATES
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Warning for future */}
-                {selectedData.isFuture && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.15, duration: 0.2 }}
-                    className="mt-6 pt-6 border-t border-[#333]"
-                  >
-                    <div className="flex items-center gap-3 text-[#a3a3a3]">
-                      <AlertTriangle className="w-5 h-5 flex-shrink-0" />
-                      <span className="font-medium">Every year you wait costs an average of $2,500 in lost savings</span>
-                    </div>
-                  </motion.div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-          </div>
+          {/* CTA Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center"
+          >
+            <div className="bg-gradient-to-r from-yellow-400/20 via-yellow-400/10 to-yellow-400/20 border border-yellow-400/30 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto">
+              <p className="text-yellow-400 font-bold text-lg mb-2 uppercase tracking-wide">Lock in Today's Rates</p>
+              <p className="text-white/70 mb-6">
+                Solar lets you freeze your energy costs. Stop paying more every year — start generating your own power.
+              </p>
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-yellow-400 hover:bg-yellow-300 text-black font-bold rounded-xl transition-all uppercase tracking-wider font-[family-name:var(--font-barlow-condensed)]"
+              >
+                See Your Savings
+                <ArrowRight className="w-5 h-5" />
+              </a>
+            </div>
+          </motion.div>
 
           {/* Bottom Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid grid-cols-3 gap-2 sm:gap-4 mt-8"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="grid grid-cols-3 gap-3 sm:gap-4 mt-12"
           >
             {[
-              { value: "114%", label: "Rate increase since 2014" },
-              { value: "30%", label: "Federal tax credit" },
+              { value: "135%", label: "Rate increase since 2014" },
+              { value: "30%", label: "Federal tax credit available" },
               { value: "<6 yrs", label: "Average payback period" },
             ].map((stat) => (
-              <div key={stat.label} className="text-center p-3 sm:p-4 bg-[#1a1a1a] rounded-2xl border border-[#333]">
-                <p className="text-lg sm:text-3xl font-bold text-white">{stat.value}</p>
-                <p className="text-[10px] sm:text-sm text-[#a3a3a3] mt-1 leading-tight">{stat.label}</p>
+              <div key={stat.label} className="text-center p-4 sm:p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+                <p className="text-2xl sm:text-4xl font-bold text-white">{stat.value}</p>
+                <p className="text-xs sm:text-sm text-white/50 mt-1">{stat.label}</p>
               </div>
             ))}
           </motion.div>

@@ -2,30 +2,39 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 
 interface AccordionItemData {
   id: number;
   title: string;
   imageUrl: string;
   description?: string;
+  duration?: string;
 }
 
 interface AccordionItemProps {
   item: AccordionItemData;
+  index: number;
   isActive: boolean;
+  isVisited: boolean;
   onMouseEnter: () => void;
 }
 
-const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEnter }) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ item, index, isActive, isVisited, onMouseEnter }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
       className={`
         relative h-[450px] md:h-[520px] rounded-[16px] overflow-hidden cursor-pointer
         transition-all duration-700 ease-in-out border border-gray-200 shadow-lg flex-shrink-0
-        ${isActive ? 'w-[280px] md:w-[420px]' : 'w-[50px] md:w-[60px]'}
+        ${isActive ? 'w-[280px] md:w-[420px]' : isHovered ? 'w-[70px] md:w-[85px]' : 'w-[50px] md:w-[60px]'}
       `}
-      onMouseEnter={onMouseEnter}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onMouseEnter();
+      }}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Background Image */}
       <img
@@ -40,6 +49,36 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
       {/* Gradient overlay for active */}
       {isActive && (
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+      )}
+
+      {/* Step Number Badge - visible when collapsed */}
+      {!isActive && (
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+          <div className={`
+            w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold
+            transition-all duration-300
+            ${isVisited ? 'bg-green-500 text-white' : 'bg-white text-black'}
+          `}>
+            {isVisited ? <Check className="w-4 h-4" /> : index + 1}
+          </div>
+        </div>
+      )}
+
+      {/* Step Number + Duration Badge - visible when active */}
+      {isActive && (
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+          <div className={`
+            w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
+            ${isVisited ? 'bg-green-500 text-white' : 'bg-white text-black'}
+          `}>
+            {isVisited ? <Check className="w-4 h-4" /> : index + 1}
+          </div>
+          {item.duration && (
+            <span className="bg-white/90 backdrop-blur-sm text-black text-xs font-semibold px-3 py-1 rounded-full">
+              {item.duration}
+            </span>
+          )}
+        </div>
       )}
 
       {/* Caption Text */}
@@ -83,12 +122,24 @@ interface ProcessAccordionProps {
   defaultActive?: number;
 }
 
-export const ProcessAccordion: React.FC<ProcessAccordionProps> = ({ items, defaultActive = 2 }) => {
+export const ProcessAccordion: React.FC<ProcessAccordionProps> = ({ items, defaultActive = 0 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultActive);
+  const [visitedSteps, setVisitedSteps] = useState<Set<number>>(new Set([defaultActive]));
   const activeItem = items[activeIndex];
 
-  const goNext = () => setActiveIndex((prev) => (prev + 1) % items.length);
-  const goPrev = () => setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
+  const handleStepChange = (index: number) => {
+    setActiveIndex(index);
+    setVisitedSteps(prev => new Set([...prev, index]));
+  };
+
+  const goNext = () => {
+    const nextIndex = (activeIndex + 1) % items.length;
+    handleStepChange(nextIndex);
+  };
+  const goPrev = () => {
+    const prevIndex = (activeIndex - 1 + items.length) % items.length;
+    handleStepChange(prevIndex);
+  };
 
   return (
     <div className="flex flex-col">
@@ -122,18 +173,34 @@ export const ProcessAccordion: React.FC<ProcessAccordionProps> = ({ items, defau
           </button>
         </div>
 
-        {/* Dots indicator */}
-        <div className="flex items-center justify-center gap-2 mt-4">
-          {items.map((_, index) => (
+        {/* Dots indicator with step numbers */}
+        <div className="flex items-center justify-center gap-3 mt-4">
+          {items.map((item, index) => (
             <button
               key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === activeIndex ? 'bg-black w-6' : 'bg-gray-300'
-              }`}
-            />
+              onClick={() => handleStepChange(index)}
+              className={`
+                w-8 h-8 rounded-full transition-all flex items-center justify-center text-sm font-bold
+                ${index === activeIndex
+                  ? 'bg-black text-white scale-110'
+                  : visitedSteps.has(index)
+                    ? 'bg-green-500 text-white'
+                    : 'bg-gray-200 text-gray-600'
+                }
+              `}
+            >
+              {visitedSteps.has(index) && index !== activeIndex ? <Check className="w-4 h-4" /> : index + 1}
+            </button>
           ))}
         </div>
+        {/* Mobile duration badge */}
+        {activeItem?.duration && (
+          <div className="flex justify-center mt-3">
+            <span className="bg-gray-100 text-gray-700 text-sm font-medium px-4 py-1.5 rounded-full">
+              {activeItem.duration}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Desktop: Original accordion layout */}
@@ -142,8 +209,10 @@ export const ProcessAccordion: React.FC<ProcessAccordionProps> = ({ items, defau
           <AccordionItem
             key={item.id}
             item={item}
+            index={index}
             isActive={index === activeIndex}
-            onMouseEnter={() => setActiveIndex(index)}
+            isVisited={visitedSteps.has(index)}
+            onMouseEnter={() => handleStepChange(index)}
           />
         ))}
       </div>
@@ -169,6 +238,41 @@ export const ProcessAccordion: React.FC<ProcessAccordionProps> = ({ items, defau
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      {/* Timeline Progress Bar */}
+      <div className="hidden md:block px-4 mt-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="relative">
+            {/* Background track */}
+            <div className="h-1 bg-gray-200 rounded-full" />
+            {/* Progress fill */}
+            <motion.div
+              className="absolute top-0 left-0 h-1 bg-black rounded-full"
+              initial={{ width: '0%' }}
+              animate={{ width: `${((activeIndex + 1) / items.length) * 100}%` }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            />
+            {/* Step markers */}
+            <div className="absolute top-0 left-0 right-0 flex justify-between -translate-y-[3px]">
+              {items.map((_, index) => (
+                <div
+                  key={index}
+                  className={`
+                    w-2.5 h-2.5 rounded-full transition-all duration-300
+                    ${index <= activeIndex ? 'bg-black' : 'bg-gray-300'}
+                  `}
+                />
+              ))}
+            </div>
+          </div>
+          {/* Timeline labels */}
+          <div className="flex justify-between mt-3 text-xs text-gray-500">
+            <span>Start</span>
+            <span className="font-medium text-black">4-8 Weeks Total</span>
+            <span>Savings</span>
+          </div>
+        </div>
       </div>
     </div>
   );
