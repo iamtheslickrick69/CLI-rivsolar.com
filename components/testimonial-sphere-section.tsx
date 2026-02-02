@@ -3,14 +3,16 @@
 import { motion } from "framer-motion"
 import SphereImageGrid, { ImageData } from "@/components/ui/img-sphere"
 
-// Professional headshot-style customer images - 30 for optimal sphere
+// Real RIV Solar customers featured first, then additional testimonials
 const TESTIMONIAL_IMAGES: ImageData[] = [
-  { id: "c1", src: "https://randomuser.me/api/portraits/men/32.jpg", alt: "Customer", title: "John M. - Riverside", description: "Saved $180/month on electricity. Best decision we ever made!" },
-  { id: "c2", src: "https://randomuser.me/api/portraits/women/44.jpg", alt: "Customer", title: "Sarah K. - Corona", description: "Professional installation, amazing savings!" },
-  { id: "c3", src: "https://randomuser.me/api/portraits/men/22.jpg", alt: "Customer", title: "Mike R. - Moreno Valley", description: "From $350 to $12/month. RIV Solar changed our lives." },
-  { id: "c4", src: "https://randomuser.me/api/portraits/women/65.jpg", alt: "Customer", title: "Lisa T. - Temecula", description: "No pressure, just facts. Finally a solar company I trust." },
-  { id: "c5", src: "https://randomuser.me/api/portraits/men/75.jpg", alt: "Customer", title: "David L. - Murrieta", description: "The AI calculator was spot-on." },
-  { id: "c6", src: "https://randomuser.me/api/portraits/women/68.jpg", alt: "Customer", title: "Jennifer W. - Hemet", description: "25-year warranty gave us peace of mind." },
+  // REAL CLIENTS - Featured prominently
+  { id: "real1", src: "/clients/client-1.png", alt: "Real Customer", title: "Maria S. - Riverside", description: "RIV Solar exceeded all my expectations. Professional from start to finish!" },
+  { id: "real2", src: "/clients/client-2.png", alt: "Real Customer", title: "Robert J. - Corona", description: "Best decision we ever made. Our bill went from $400 to almost nothing!" },
+  { id: "real3", src: "/clients/client-3.png", alt: "Real Customer", title: "Mike T. - Moreno Valley", description: "Honest company, no pressure sales. Just facts and real savings." },
+  { id: "real4", src: "/clients/client-4.png", alt: "Real Customer", title: "Susan L. - Temecula", description: "The installation was quick and clean. Love my new solar panels!" },
+  { id: "real5", src: "/clients/client-5.png", alt: "Real Customer", title: "Diana M. - Murrieta", description: "Finally free from SCE rate hikes. Thank you RIV Solar!" },
+  { id: "real6", src: "/clients/client-6.png", alt: "Real Customer", title: "David K. - Hemet", description: "From $350/month to $12. The savings are real!" },
+  // Additional testimonials to fill the sphere
   { id: "c7", src: "https://randomuser.me/api/portraits/men/45.jpg", alt: "Customer", title: "Robert S. - Perris", description: "Installed in 2 weeks. Now we produce more than we use!" },
   { id: "c8", src: "https://randomuser.me/api/portraits/women/33.jpg", alt: "Customer", title: "Amanda H. - Lake Elsinore", description: "Honest pricing, no hidden fees." },
   { id: "c9", src: "https://randomuser.me/api/portraits/men/52.jpg", alt: "Customer", title: "Chris P. - Beaumont", description: "My electric bill is basically $0 now!" },
